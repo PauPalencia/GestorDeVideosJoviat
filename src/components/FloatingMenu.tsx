@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Animated, PanResponder, Pressable, StyleSheet, View } from 'react-native';
+import { Animated, Dimensions, PanResponder, Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colors } from '../theme/colors';
 
@@ -9,45 +9,53 @@ type Props = {
   onLists: () => void;
 };
 
+const { width: SW, height: SH } = Dimensions.get('window');
+
 export const FloatingMenu: React.FC<Props> = ({ onHome, onUser, onLists }) => {
   const [expanded, setExpanded] = useState(false);
-  const pan = useRef(new Animated.ValueXY({ x: 280, y: 560 })).current;
+  const pan = useRef(new Animated.ValueXY({ x: SW - 80, y: SH - 200 })).current;
 
   const responder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
+    onPanResponderGrant: () => pan.extractOffset(),
     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }], { useNativeDriver: false }),
-    onPanResponderRelease: () => {
-      pan.flattenOffset();
-    },
-    onPanResponderGrant: () => pan.extractOffset()
+    onPanResponderRelease: () => pan.flattenOffset(),
   });
 
   return (
-    <Animated.View style={[styles.host, { transform: pan.getTranslateTransform() }]} {...responder.panHandlers}>
+    <Animated.View
+      style={[styles.host, { transform: pan.getTranslateTransform() }]}
+      {...responder.panHandlers}
+    >
       {expanded && (
         <View style={styles.bubbles}>
-          <IconButton icon="star" onPress={onHome} />
-          <IconButton icon="person" onPress={onUser} />
-          <IconButton icon="menu" onPress={onLists} />
+          <NavButton icon="star" label="Inici" onPress={onHome} />
+          <NavButton icon="person" label="Usuari" onPress={onUser} />
+          <NavButton icon="menu" label="Llistes" onPress={onLists} />
         </View>
       )}
-      <IconButton icon={expanded ? 'close' : 'home'} onPress={() => setExpanded((p) => !p)} primary />
+      <Pressable
+        style={[styles.btn, styles.primary]}
+        onPress={() => setExpanded((p) => !p)}
+      >
+        <Ionicons name={expanded ? 'close' : 'home'} color="#fff" size={22} />
+      </Pressable>
     </Animated.View>
   );
 };
 
-const IconButton: React.FC<{ icon: keyof typeof Ionicons.glyphMap; onPress: () => void; primary?: boolean }> = ({
-  icon,
-  onPress,
-  primary
-}) => (
-  <Pressable onPress={onPress} style={[styles.btn, primary ? styles.primary : styles.secondary]}>
+const NavButton: React.FC<{
+  icon: keyof typeof Ionicons.glyphMap;
+  label: string;
+  onPress: () => void;
+}> = ({ icon, onPress }) => (
+  <Pressable onPress={onPress} style={[styles.btn, styles.secondary]}>
     <Ionicons name={icon} color="#fff" size={20} />
   </Pressable>
 );
 
 const styles = StyleSheet.create({
-  host: { position: 'absolute', zIndex: 60 },
+  host: { position: 'absolute', zIndex: 60, alignItems: 'center' },
   bubbles: { gap: 8, marginBottom: 8, alignItems: 'center' },
   btn: {
     width: 52,
@@ -55,8 +63,12 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 3
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
   },
   primary: { backgroundColor: colors.accent },
-  secondary: { backgroundColor: colors.success }
+  secondary: { backgroundColor: colors.success },
 });

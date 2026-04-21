@@ -2,7 +2,6 @@ import React from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Ionicons } from '@expo/vector-icons';
 import { useAuth } from '../context/AuthContext';
 import { AuthLandingScreen } from '../screens/AuthLandingScreen';
 import { LoginScreen } from '../screens/LoginScreen';
@@ -17,14 +16,10 @@ const Tab = createBottomTabNavigator();
 
 const MainTabs = () => (
   <Tab.Navigator
-    screenOptions={({ route }) => ({
+    screenOptions={{
       headerShown: false,
-      tabBarStyle: { backgroundColor: '#12381f' },
-      tabBarIcon: ({ color, size }) => {
-        const icon = route.name === 'Inici' ? 'star' : route.name === 'Usuari' ? 'person' : 'list';
-        return <Ionicons name={icon} color={color} size={size} />;
-      }
-    })}
+      tabBarStyle: { display: 'none' },
+    }}
   >
     <Tab.Screen name="Inici" component={HomeScreen} />
     <Tab.Screen name="Llistes" component={ListsScreen} />
@@ -38,7 +33,7 @@ export const RootNavigator = () => {
   if (loading) {
     return (
       <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.bg }}>
-        <ActivityIndicator color={colors.success} />
+        <ActivityIndicator color={colors.success} size="large" />
       </View>
     );
   }

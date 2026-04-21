@@ -3,12 +3,17 @@ export type VideoSource = 'youtube' | 'instagram';
 export type Video = {
   id: string;
   title: string;
+  description?: string;
   url: string;
   thumbnailUrl: string;
   duration?: string;
   authorName?: string;
+  authorAvatarUrl?: string;
+  uploadedAt?: number;
   createdAt: number;
   source: VideoSource;
+  listIds: string[];
+  ownerUid: string;
 };
 
 export type VideoList = {
@@ -20,6 +25,7 @@ export type VideoList = {
   ownerUid: string;
   isFavorite: boolean;
   videoIds: string[];
+  memberUids: string[];
 };
 
 export type AppUser = {
