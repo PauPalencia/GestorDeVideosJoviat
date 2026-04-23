@@ -11,13 +11,15 @@ type Props = {
 };
 
 export const NowPlayingBar: React.FC<Props> = ({ showEditor = false }) => {
-  const { currentVideo, activeList, isPlaying, setIsPlaying, setAllLists } = usePlayer();
+  const { currentVideo, activeList, setActiveList, isPlaying, setIsPlaying, setAllLists } = usePlayer();
   const [editorVisible, setEditorVisible] = useState(false);
 
   const handleToggleFavorite = async () => {
     if (!activeList) return;
     const next = !activeList.isFavorite;
-    setAllLists((prev) => prev.map((l) => (l.id === activeList.id ? { ...l, isFavorite: next } : l)));
+    const updated = { ...activeList, isFavorite: next };
+    setActiveList(updated);
+    setAllLists((prev) => prev.map((l) => (l.id === activeList.id ? updated : l)));
     await toggleFavoriteList(activeList.id, next);
   };
 

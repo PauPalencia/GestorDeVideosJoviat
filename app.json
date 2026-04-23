@@ -3,7 +3,7 @@
     "name": "Gestor de vídeos Joviat",
     "slug": "gestor-de-videos-joviat",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "default",
     "userInterfaceStyle": "dark",
     "assetBundlePatterns": ["**/*"]
   }
