@@ -1,17 +1,13 @@
 import React, { useRef, useState } from 'react';
 import { Animated, Dimensions, PanResponder, Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { colors } from '../theme/colors';
-
-type Props = {
-  onHome: () => void;
-  onUser: () => void;
-  onLists: () => void;
-};
 
 const { width: SW, height: SH } = Dimensions.get('window');
 
-export const FloatingMenu: React.FC<Props> = ({ onHome, onUser, onLists }) => {
+export const FloatingMenu: React.FC = () => {
+  const router = useRouter();
   const [expanded, setExpanded] = useState(false);
   const pan = useRef(new Animated.ValueXY({ x: SW - 80, y: SH - 200 })).current;
 
@@ -29,9 +25,9 @@ export const FloatingMenu: React.FC<Props> = ({ onHome, onUser, onLists }) => {
     >
       {expanded && (
         <View style={styles.bubbles}>
-          <NavButton icon="star" label="Inici" onPress={onHome} />
-          <NavButton icon="person" label="Usuari" onPress={onUser} />
-          <NavButton icon="menu" label="Llistes" onPress={onLists} />
+          <NavButton icon="star" onPress={() => { setExpanded(false); router.replace('/(tabs)/'); }} />
+          <NavButton icon="person" onPress={() => { setExpanded(false); router.replace('/(tabs)/user'); }} />
+          <NavButton icon="menu" onPress={() => { setExpanded(false); router.replace('/(tabs)/lists'); }} />
         </View>
       )}
       <Pressable
@@ -46,7 +42,6 @@ export const FloatingMenu: React.FC<Props> = ({ onHome, onUser, onLists }) => {
 
 const NavButton: React.FC<{
   icon: keyof typeof Ionicons.glyphMap;
-  label: string;
   onPress: () => void;
 }> = ({ icon, onPress }) => (
   <Pressable onPress={onPress} style={[styles.btn, styles.secondary]}>

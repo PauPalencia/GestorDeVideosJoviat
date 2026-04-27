@@ -11,6 +11,7 @@ import {
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { FloatingMenu } from '../components/FloatingMenu';
 import { NowPlayingBar } from '../components/NowPlayingBar';
@@ -20,7 +21,8 @@ import { fetchVideosByList, toggleFavoriteList } from '../services/firebaseServi
 import { useAuth } from '../context/AuthContext';
 import { usePlayer } from '../context/PlayerContext';
 
-export const ListsScreen = ({ navigation }: any) => {
+export const ListsScreen = () => {
+  const router = useRouter();
   const { user } = useAuth();
   const { allLists, setAllLists, refreshLists, setCurrentVideo, setActiveList } = usePlayer();
   const insets = useSafeAreaInsets();
@@ -66,7 +68,7 @@ export const ListsScreen = ({ navigation }: any) => {
 
   const handlePlayVideo = (video: Video) => {
     setCurrentVideo(video);
-    navigation.navigate('Inici');
+    router.replace('/(tabs)/');
   };
 
   return (
@@ -134,11 +136,7 @@ export const ListsScreen = ({ navigation }: any) => {
       </View>
 
       <NowPlayingBar />
-      <FloatingMenu
-        onHome={() => navigation.navigate('Inici')}
-        onUser={() => navigation.navigate('Usuari')}
-        onLists={() => navigation.navigate('Llistes')}
-      />
+      <FloatingMenu />
 
       <Modal visible={!!detailList} animationType="slide" onRequestClose={() => setDetailList(null)}>
         <View style={[styles.detailContainer, { paddingTop: insets.top }]}>

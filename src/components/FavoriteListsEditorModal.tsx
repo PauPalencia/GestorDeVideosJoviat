@@ -22,7 +22,7 @@ import {
   toggleFavoriteList,
 } from '../services/firebaseService';
 
-type View = 'main' | 'addById' | 'createList';
+type ModalView = 'main' | 'addById' | 'createList';
 
 type Props = {
   visible: boolean;
@@ -32,7 +32,7 @@ type Props = {
 export const FavoriteListsEditorModal: React.FC<Props> = ({ visible, onClose }) => {
   const { user } = useAuth();
   const { allLists, setAllLists, refreshLists } = usePlayer();
-  const [currentView, setCurrentView] = useState<View>('main');
+  const [currentView, setCurrentView] = useState<ModalView>('main');
 
   const [addByIdInput, setAddByIdInput] = useState('');
   const [addByIdError, setAddByIdError] = useState('');

@@ -7,7 +7,7 @@ import { FloatingMenu } from '../components/FloatingMenu';
 import { logout, updateUserData } from '../services/firebaseService';
 import { colors } from '../theme/colors';
 
-export const UserScreen = ({ navigation }: any) => {
+export const UserScreen = () => {
   const { user } = useAuth();
   const insets = useSafeAreaInsets();
   const [displayName, setDisplayName] = useState(user?.displayName ?? '');
@@ -92,11 +92,7 @@ export const UserScreen = ({ navigation }: any) => {
         </View>
       </ScrollView>
 
-      <FloatingMenu
-        onHome={() => navigation.navigate('Inici')}
-        onUser={() => navigation.navigate('Usuari')}
-        onLists={() => navigation.navigate('Llistes')}
-      />
+      <FloatingMenu />
     </View>
   );
 };

@@ -20,7 +20,7 @@ import { fetchFavoriteVideos } from '../services/firebaseService';
 import { useAuth } from '../context/AuthContext';
 import { usePlayer } from '../context/PlayerContext';
 
-export const HomeScreen = ({ navigation }: any) => {
+export const HomeScreen = () => {
   const { user } = useAuth();
   const { currentVideo, setCurrentVideo, setActiveList, allLists } = usePlayer();
   const insets = useSafeAreaInsets();
@@ -138,11 +138,7 @@ export const HomeScreen = ({ navigation }: any) => {
           />
 
           <NowPlayingBar showEditor />
-          <FloatingMenu
-            onHome={() => navigation.navigate('Inici')}
-            onUser={() => navigation.navigate('Usuari')}
-            onLists={() => navigation.navigate('Llistes')}
-          />
+          <FloatingMenu />
         </>
       )}
 

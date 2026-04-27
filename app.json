@@ -5,6 +5,10 @@
     "version": "1.0.0",
     "orientation": "default",
     "userInterfaceStyle": "dark",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": ["**/*"],
+    "scheme": "gestorvideos",
+    "web": {
+      "bundler": "metro"
+    }
   }
 }
