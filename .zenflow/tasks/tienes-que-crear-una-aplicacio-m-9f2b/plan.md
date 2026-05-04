@@ -25,6 +25,11 @@
 - `src/screens/ListsScreen.tsx` — cerca, toggle favorit, modal detall de llista amb vídeos
 - `src/screens/UserScreen.tsx` — camps editables (nom, telèfon), guardar a Firebase
 
+### [x] Step 7: Fix react/compiler-runtime error
+- Installed `react-compiler-runtime` package (official React 18 polyfill for React Compiler)
+- Updated `metro.config.js` in both worktree and D:\JOVIAT project to redirect `react/compiler-runtime` → `react-compiler-runtime/dist/index.js`
+- Deleted `%TEMP%\metro-cache` to force fresh compilation
+
 ### [x] Step 6: Migració a expo-router
 - `package.json` — `"main": "expo-router/entry"`, expo-router ~4.0.0 afegit a dependencies
 - `babel.config.js` — `'react-compiler': false` per evitar error de compiler-runtime
