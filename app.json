@@ -9,6 +9,9 @@
     "scheme": "gestorvideos",
     "web": {
       "bundler": "metro"
+    },
+    "experiments": {
+      "reactCompiler": false
     }
   }
 }
